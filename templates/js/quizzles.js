@@ -355,9 +355,11 @@
 
 
       /**
-       * TODO: This function needs to be updated
+       * This function loads the current rounds question from a match
+       * and displays the answers to the player in a Bootstrap modal.
        */
       function getQuestion() {
+        // Todo: This function needs to be updated to include templates
         var that = $(this);
 
         // Set the urlsafeMatchKey
@@ -424,7 +426,7 @@
 
 
       /**
-       * Very basic "login" functionality. It takes a username and
+       * Very basic (!) "login" functionality. It takes a username and
        * checks if they exist in the database. If the user exists,
        * it creates a cookie with the username for future use.
        * NB: The cookie expires as soon as the browser window is closed.
