@@ -1,0 +1,39 @@
+application: your-app-id
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /_ah/spi/.*
+  script: api.api
+
+- url: /css
+  static_dir: templates/css
+  mime_type: text/css
+
+- url: /js
+  static_dir: templates/js
+  mime_type: application/javascript
+
+- url: /staches
+  static_dir: templates/staches
+  mime_type: text/template
+
+- url: /crons/send_reminder
+  script: main.app
+  login: admin
+
+- url: .*
+  script: main.app
+
+libraries:
+ - name: endpoints
+   version: latest
+ - name: jinja2
+   version: latest
+
+ - name: webapp2
+   version: "2.5.2"
+
+

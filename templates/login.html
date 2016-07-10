@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    {% include "template_head.html" %}
+</head>
+
+<body>
+    {% include "template_menu.html" %}
+
+    <div id="notification"></div>
+
+    <div class="container clearfix">
+        <div class="row clearfix">
+            <h2>Login</h2>
+            <form id="login-form">
+
+                <input name="user-name" id="user-name" placeholder="Username" required />
+                <button type="submit" class="submit btn btn-small">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

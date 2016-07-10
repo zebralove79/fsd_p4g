@@ -1,0 +1,17 @@
+<div id="high-scores-tmplt">
+    <div id="playeres-tbl", class="tbl">
+        <div class="tbl-head">
+            <div class="tbl-cell">Player</div>
+            <div class="tbl-cell">Score</div>
+            <div class="tbl-cell">Batting average</div>
+        </div>
+
+        {{#scores}}
+        <div class="tbl-row">
+            <div class="tbl-cell">{{user_name}}</div>
+            <div class="tbl-cell">{{score}}</div>
+            <div class="tbl-cell">{{batting_avg}}</div>
+        </div>
+        {{/scores}}
+    </div>
+</div>

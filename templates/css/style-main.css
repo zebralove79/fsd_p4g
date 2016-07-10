@@ -1,0 +1,97 @@
+.tbl {
+    display: table;
+    width: 100%;
+}
+
+.tbl-head {
+    display: table-header-group;
+    font-weight: bold;
+    background-color: #DDDDDD;
+}
+
+.tbl-row {
+    display: table-row;
+}
+
+.tbl-cell {
+    display: table-cell;
+    vertical-align: middle;
+    height: 40px;
+    padding: 0 8px 0 8px;
+}
+
+.tbl-row:nth-child(odd) {
+    background-color: #F1F1F1;
+}
+
+.tbl-row:hover {
+    background-color: #3366FF;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.answers {
+    display: table;
+    background-color: #F1F1F1;
+    width: 100%;
+}
+
+.answer {
+    height: 100px;
+    border-color: white;
+    border-width: 3px;
+    border-style: solid;
+}
+
+.answer-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%)
+}
+
+.answer:hover {
+    background-color: #3366FF;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.invisible {
+    display: none;
+}
+
+.match-teaser, .game-teaser {
+    background: #F1F1F1;
+    overflow: hidden;
+    height: auto;
+    margin-top: 15px;
+}
+
+.match-teaser.playable:hover, .game-teaser:hover {
+    background-color: #337ab7;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.title, .user-name, .rounds {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.btn {
+    margin: 2px 2px 2px 2px;
+}
+
+#notification {
+    width: 90%;
+    position: fixed;
+    top: 75px;
+    left: 5%;
+    z-index: 9999;
+}
+
+#create-question-form, #set-playmode-form {
+    margin-bottom: 20px;
+}

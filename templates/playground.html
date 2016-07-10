@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script>
+
+    </script>
+
+    <script type="text/javascript">
+        function init() {
+          console.log("INIT")
+          //gapi.client.setApiKey('AIzaSyAG77xetqztpg7JQXHki7Y9WN5J-NVMDqQ');
+          gapi.client.load('questions', 'v1', affirmLoad, ROOT);
+          bindEvents();
+        }
+    </script>
+    <script scr="js/js.cookie.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=init"></script>
+</head>
+  <body>
+    <h1>Questions API v1 &mdash; Testing ground &mdash; Quizzles</h1>
+    <p>Disclaimer: This is a testing playground. It makes testing the application a lot easier than only using the api explorer. I recommend using it in combination with the api explorer (particularly when it comes to remembering/requiring lots of urlsafe keys). It takes some liberties with the flow of the game for quicker testing. Use at your own risk :). And no, the code implemented here for testing purposes doesn't aim to be pretty.
+
+    <form id="create-player-form">
+      <h2>Player registration</h2>
+      <h3>Instructions</h3>
+      <p>Use to create new players.</p>
+      <div><label>user_name: </label><input id="user-name" required /></div>
+      <div><label>email_address: </label><input id="email-address" required /></div>
+      <button type="submit" class="submit btn btn-small">Submit</button>
+    </form>
+
+    <form id="get-highscores-form">
+      <h2>Player list</h2>
+      <p>Retrieves a list of players.</p>
+      <div><label>page (for pagination): </label><input id="page" /></div>
+      <button type="submit" class="submit btn btn-small">Submit</button>
+    </form>
+
+    <div id="players">
+      <h2>Players</h2>
+      <h3>Instructions</h3>
+      <p>Click on a player name to load their profile, games and matches.</p>
+    </div>
+
+    <div id="profile">
+      <h2>Player Profile</h2>
+      <p>Note: Click on a player in the player list above to see their profile.</p>
+    </div>
+
+    <div id="games">
+      <h2>Player Games</h2>
+      <p>Note: Click on a player in the player list above to see their games.</p>
+      <form id="create-question-form">
+        <h3>Create question</h3>
+        <p>Can be used to add questions to games.</p>
+        <div><label>question: </label><input type="text" name="question" id="question" required /></div>
+        <div><label>correct_answer: </label><input type="text" name="correct-answer" id="correct-answer" required /></div>
+        <div><label>incorrect_answer: </label><input type="text" name="incorrect-answer1" class="incorrect-answers" required /></div>
+        <div><label>incorrect_answer: </label><input type="text" name="incorrect-answer2" class="incorrect-answers" required /></div>
+        <div><label>incorrect_answer: </label><input type="text" name="incorrect-answer3" class="incorrect-answers" required /></div>
+        <div><label>urlsafe_key (Game): </label><input type="text" name="urlsafe-key" id="urlsafe-key" /></div>
+        <button type="submit" class="submit btn btn-small">Submit</button>
+      </form>
+      <form id="create-game-form">
+        <h3>Create game</h3>
+        <p>Can be used to create a new game.</p>
+        <div><label>user_name: </label><input type="text" name="user-name" id="user-name" required /></div>
+        <div><label>title: </label><input type="text" name="title" id="title" required /></div>
+        <button type="submit" class="submit btn btn-small">Submit</button>
+      </form>
+      <h3>Instructions</h3>
+      <p>Click on a urlsafe_key cell to fill out the respective field in the create question form (saves time on copypasta).</p>
+      <p>Click on a rounds cell to fill out the respective field in the urlsafe_key (Game) field in the create match form (saves time on copypasta).</p>
+      <p>Click on a playmode cell to put a game into playmode.</p>
+    </div>
+
+    <div id="matches">
+      <h2>Player Matches</h2>
+      <p>Click on a player in the player list above to see their matches.</p>
+      <form id="create-match-form">
+        <h3>Create match</h3>
+        <p>Use to create a new match. The user_name can be any player, it doesn't have to be the the creator of the game.</p>
+        <div><label>user_name: </label><input type="text" name="user-name" id="user-name" required /></div>
+        <div><label>urlsafe_key (Game): </label><input type="text" name="urlsafe-key" id="urlsafe-key" /></div>
+        <button type="submit" class="submit btn btn-small">Submit</button>
+      </form>
+      <h3>Instructions</h3>
+      <p>Click on a current round cell to get the current round's question. You can answer it too.</p>
+    </div>
+
+    <div id="questions">
+      <h2>Question</h2>
+      <h3>Instructions</h3>
+      <p>Click on one of the answers to answer the question. The next question will be automatically loaded. You will be notified if no more quesions are left to be answered.</p>
+      <div id="notification"></div>
+    </div>
+
+  </body>
+</html>

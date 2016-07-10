@@ -1,0 +1,18 @@
+<div id="game-teaser-tmplt">
+
+  {{#games}}
+  <div class="col-sm-4 game-teaser-box">
+    <div class="game-teaser{{#play_mode}} playable{{/play_mode}}">
+      <h4 class="col-xs-12 title">{{title}}{{#play_mode}} (playable){{/play_mode}}</h4>
+      <p class="col-xs-12 user-name">{{creator}}</p>
+      <p class="col-xs-12 rounds">{{rounds}} rounds</p>
+      <p class="col-xs-12 urlsafe-key invisible">{{urlsafe_key}}</p>
+    </div>
+  </div>
+  {{/games}}
+
+  {{^games}}
+  <p>You have not created any games, yet.</p>
+  {{/games}}
+
+</div>

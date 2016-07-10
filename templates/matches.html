@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  {% include "template_head.html" %}
+</head>
+
+<body>
+  {% include "template_menu.html" %}
+
+  <div id="notification"></div>
+
+  <div class="container clearfix">
+    <div class="row clearfix" id="match-teasers">
+     <h2>Your matches</h2>
+   </div>
+ </div>
+
+ <!-- Modal -->
+ <div id="question" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="question-title"></h4>
+      </div>
+
+      <div class="modal-body" id="question-body"></div>
+
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

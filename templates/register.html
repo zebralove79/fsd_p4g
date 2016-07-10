@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    {% include "template_head.html" %}
+</head>
+
+<body>
+    {% include "template_menu.html" %}
+
+    <div id="notification"></div>
+
+    <div class="container clearfix">
+        <div class="row clearfix" id="create-player">
+
+            <form id="create-player-form">
+                <h2>Register</h2>
+                <div>
+                    <input name="user-name" id="user-name" placeholder="Username" required />
+                    <input name="email-address" id="email-address" placeholder="Email address" required />
+                    <button type="submit" class="submit btn btn-small">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

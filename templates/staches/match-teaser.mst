@@ -1,0 +1,21 @@
+<div id="match-teaser-tmplt">
+
+  {{#matches}}
+  <div class="col-sm-4 match-teaser-box">
+    <div class="match-teaser{{^match_over}} playable{{/match_over}}">
+      <h4 class="col-md-12 title">Match{{#match_over}} (over){{/match_over}}</h4>
+      <p class="col-xs-12 round-info">
+        <span class="current-round">{{current_round}}</span>
+        <span class="total-rounds">of {{total_rounds}}</span>
+      </p>
+      <p class="col-xs-12 score">{{score}} points</p>
+      <p class="col-xs-12 urlsafe-key invisible">{{urlsafe_key}}</p>
+    </div>
+  </div>
+  {{/matches}}
+
+  {{^matches}}
+  <p>You have not created any matches, yet.</p>
+  {{/matches}}
+
+</div>
