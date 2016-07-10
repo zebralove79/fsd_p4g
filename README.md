@@ -282,3 +282,15 @@ The batting average is the ratio of questions answered correctly to total number
  - Sharing function
  - Leitner-like flash card system (?)
  - Different types of quizzles, e.g. images, equations, ... (?)
+
+## Acknowledgments / Thanks
+ - Thanks to Stack Overflow for providing a rather large, searchable plethora of answers on issues I had with Bootstrap and jQuery.
+ - **Resources used (backend)**
+    - Google App Engine / Cloud Computing API documentation
+    - Google API Client Libraries API (Javascript BETA) documentation
+    - Udacity forums
+ - **Resources used (frontend)**
+    - Boostrap and its documentation
+    - jQuery and its documentation
+    - Mustache and its documentation
+
