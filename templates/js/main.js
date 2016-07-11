@@ -108,7 +108,7 @@
 
         var request = gapi.client.questions.set_playmode({
           'user_name': userName,
-          'urlsafe_match_key': urlsafeGameKey,
+          'urlsafe_key': urlsafeGameKey,
           'start_game': true
         });
         request.then(function(response) {
@@ -328,7 +328,7 @@
           'urlsafe_game_key': urlsafeKey
         });
         request.then(function(response) {
-          window.alert(response.result.message);
+          window.alert("Match successfully created.");
           getUserMatches()
         }, function(reason) {
           window.alert(reason.result.error.message);

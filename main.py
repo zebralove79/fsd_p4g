@@ -5,7 +5,7 @@
 from utils import logger
 
 import webapp2
-from google.appengine.api import mail, app_identity, users
+from google.appengine.api import mail, app_identity
 from google.appengine.ext import ndb
 from api import QuestionsApi
 

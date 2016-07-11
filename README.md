@@ -60,7 +60,7 @@ For detailed instructions please check the manual (MANUAL.md).
     - Path: 'game/{urlsafe_game_key}/create_match'
     - Method: POST
     - Parameters: urlsafe_game_key, user_name, start_game (optional)
-    - Returns: StringMessage -- a confirmation that the match has been created
+    - Returns: MatchForm -- a MatchForm representation of the created match
     - Raises: BadRequestException -- raised when game has no questions or when
                                      game is not in play mode or when play mode
                                      enabling is required, but was not requested
@@ -105,10 +105,10 @@ For detailed instructions please check the manual (MANUAL.md).
 
  - **cancel_match**
     - Path: 'match/{urlsafe_match_key}/cancel_match'
-    - Method: POST
+    - Method: DELETE
     - Parameters: urlsafe_match_key, user_name
     - Returns: StringMessage -- a confirmation of the match deletion
-    - Raises: ForbiddenException -- raised if a player tries to delete another player's match
+    - Raises: ForbiddenException -- raised if a player tries to delete another player's match or if the match does not exist
     - Description: Deletes a match.
         This function allows players to cancel their own (and only their own)
         matches. Cancelled matches are deleted and cannot be recovered.
@@ -130,9 +130,12 @@ For detailed instructions please check the manual (MANUAL.md).
     - Parameters: urlsafe_game_key, urlsafe_question_key
     - Returns: StringMessage -- A confirmation that the question has been successfully added to a game
     - Description: Allows players to add questions to existing games.
-        This function allows players to add questions to existing games. This
-        allows questions to be re-used across many games rather than belong to
-        one game only.
+        This function allows players to add already existing questions to
+        existing games. This allows questions to be re-used across many games
+        rather than belong to one game only.
+        (NB: This does not create a new questions, just allows questions from
+        one game to be used in another. To create new questions use the
+        create_question endpoints method)
 
 
  - **set_playmode**
@@ -140,7 +143,7 @@ For detailed instructions please check the manual (MANUAL.md).
     - Method: POST
     - Parameters: urlsafe_game_key, user_name, start_game
     - Returns: StringMessage -- a confirmation that the play mode is enabled
-    - Raises: ForbiddenException -- raised if player requestion play mode is not the game's creator
+    - Raises: ForbiddenException -- raised if player requesting play mode is not the game's creator or the game does not exist
     - Raises  BadRequestException -- raised when the user has not explicitly requested the game be put into play mode
     - Description: Set a game's play mode
         This function allows to put a game into play mode. Games in play mode
@@ -292,5 +295,6 @@ The batting average is the ratio of questions answered correctly to total number
  - **Resources used (frontend)**
     - Boostrap and its documentation
     - jQuery and its documentation
+    - JavaScript Cookie API and its documentation
     - Mustache and its documentation
 

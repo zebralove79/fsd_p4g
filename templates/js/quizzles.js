@@ -74,7 +74,7 @@
           });
 
           request.then(function(response) {
-            createNotification("alert-success", response.result.message);
+            createNotification("alert-success", "Match successfully created.");
             getUserMatches();
           }, function(reason) {
             createNotification("alert-danger", reason.result.error.message);
@@ -412,7 +412,7 @@
 
         var request = gapi.client.questions.set_playmode({
           'user_name': userName,
-          'urlsafe_match_key': urlsafeGameKey,
+          'urlsafe_key': urlsafeGameKey,
           'start_game': true
         });
         request.then(function(response) {

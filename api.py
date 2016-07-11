@@ -50,8 +50,8 @@ QUESTION_GAME_REQUEST = endpoints.ResourceContainer(
 PROFILE_REQUEST = endpoints.ResourceContainer(
         user_name=messages.StringField(1, required=True))
 
-GET_MATCH_REQUEST = endpoints.ResourceContainer(
-        urlsafe_match_key=messages.StringField(1, required=True),
+GET_ENTITY_REQUEST = endpoints.ResourceContainer(
+        urlsafe_key=messages.StringField(1, required=True),
         user_name=messages.StringField(2, required=True),
         start_game=messages.BooleanField(3))
 
@@ -126,7 +126,7 @@ class QuestionsApi(remote.Service):
         return game.to_form()
 
     @endpoints.method(request_message=NEW_MATCH_REQUEST,
-                      response_message=StringMessage,
+                      response_message=MatchForm,
                       path='game/{urlsafe_game_key}/create_match',
                       name='create_match',
                       http_method='POST')
@@ -175,7 +175,7 @@ class QuestionsApi(remote.Service):
         match = Match.create_match(player=player.key, game=game)
 
         # Return a confirmation of the match creation
-        return StringMessage(message='Match successfully created.')
+        return match.to_form()
 
     @endpoints.method(request_message=LIST_REQUEST,
                       response_message=GameForms,
@@ -257,11 +257,11 @@ class QuestionsApi(remote.Service):
         # Return scores
         return ScoreForms(scores=scores)
 
-    @endpoints.method(request_message=GET_MATCH_REQUEST,
+    @endpoints.method(request_message=GET_ENTITY_REQUEST,
                       response_message=StringMessage,
-                      path='match/{urlsafe_match_key}/cancel_match',
+                      path='match/{urlsafe_key}/cancel_match',
                       name='cancel_match',
-                      http_method='POST')
+                      http_method='DELETE')
     def cancel_match(self, request):
         """ Deletes a match.
 
@@ -275,13 +275,18 @@ class QuestionsApi(remote.Service):
         Raises:
             ForbiddenException -- raised if a player tries to
                                   delete another player's match
+                                  or if the match does not exist
         """
         # Get the specified match
-        match = get_by_urlsafe(request.urlsafe_match_key, Match)
+        match = get_by_urlsafe(request.urlsafe_key, Match)
+
+        # Check whether match exists, if not throw error
+        if not match:
+            raise endpoints.ForbiddenException('Match does not exist.')
 
         # Check deletion request comes from the creator of the match
         player = get_player(request.user_name)
-        if match.player != player.key:
+        if match and match.player != player.key:
             raise endpoints.ForbiddenException(
                 'You cannot delete other players\'s matches.')
 
@@ -334,9 +339,12 @@ class QuestionsApi(remote.Service):
     def add_question(self, request):
         """ Allows players to add questions to existing games.
 
-        This function allows players to add questions to existing games. This
-        allows questions to be re-used across many games rather than belong to
-        one game only.
+        This function allows players to add already existing questions to
+        existing games. This allows questions to be re-used across many games
+        rather than belong to one game only.
+        (NB: This does not create a new questions, just allows questions from
+        one game to be used in another. To create new questions use the
+        create_question endpoints method)
 
         Returns:
             StringMessage -- A confirmation that the question has been
@@ -353,9 +361,9 @@ class QuestionsApi(remote.Service):
         # Return confirmation that question has been added to game
         return StringMessage(message="Question successfully added to Game")
 
-    @endpoints.method(request_message=GET_MATCH_REQUEST,
+    @endpoints.method(request_message=GET_ENTITY_REQUEST,
                       response_message=StringMessage,
-                      path='game/{urlsafe_match_key}/set_playmode',
+                      path='game/{urlsafe_key}/set_playmode',
                       name='set_playmode',
                       http_method='POST')
     def set_playmode(self, request):
@@ -369,16 +377,20 @@ class QuestionsApi(remote.Service):
             StringMessage -- a confirmation that the play mode is enabled
 
         Raises:
-            ForbiddenException -- raised if player requestion play mode is not
-                                  the game's creator
+            ForbiddenException -- raised if player requesting play mode is not
+                                  the game's creator or the game does not exist
             BadRequestException -- raised when the user has not explicitly
                                    requested the game be put into play mode
         """
         # Get the game and player from the datastore
-        game = get_by_urlsafe(request.urlsafe_match_key, Game)
+        game = get_by_urlsafe(request.urlsafe_key, Game)
         player = get_player(request.user_name)
 
-        if len(game.questions) == 0:
+        if not game:
+            raise endpoints.ForbiddenException(
+                'The game does not exist.')
+
+        if game.questions == []:
             raise endpoints.BadRequestException(
                 'The game has no questions and cannot be played.')
 
@@ -399,9 +411,9 @@ class QuestionsApi(remote.Service):
         # Return confirmation that play mode is now enabled
         return StringMessage(message="Game is now in play mode.")
 
-    @endpoints.method(request_message=GET_MATCH_REQUEST,
+    @endpoints.method(request_message=GET_ENTITY_REQUEST,
                       response_message=MatchForm,
-                      path='match/{urlsafe_match_key}/history',
+                      path='match/{urlsafe_key}/history',
                       name='get_match_history',
                       http_method='GET')
     def get_match_history(self, request):
@@ -419,7 +431,7 @@ class QuestionsApi(remote.Service):
                                   another player's history
         """
         # Get the requested match and player from the datastore
-        match = get_by_urlsafe(request.urlsafe_match_key, Match)
+        match = get_by_urlsafe(request.urlsafe_key, Match)
         player = get_player(request.user_name)
 
         # If match player and request player do not match, deny history access
